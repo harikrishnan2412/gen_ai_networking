@@ -1,2 +1,2 @@
 # gen_ai_networking
-TinkerHub gen ai networking program.
+Website for TinkerHub gen ai networking program.
