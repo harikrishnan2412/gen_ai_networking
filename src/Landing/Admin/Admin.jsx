@@ -1,8 +1,14 @@
-import React from 'react'
-import './Admin.css'
+import React, { useState, useEffect } from 'react';
+import { collection, addDoc, query, getDocs } from 'firebase/firestore'; // Import necessary Firestore functions
+import { db } from '../../../firebase';
+import "./Admin.css"
 
 const Admin = () => {
-  const [numTeams, setNumTeams] = useState(0);
+  const [numTeams, setNumTeams] = useState(10);
+
+  useEffect(() => {
+    // You may want to fetch the number of teams or any other initial data here
+  }, []);
 
   const handleRelease = async (event) => {
     event.preventDefault();
@@ -47,17 +53,10 @@ const Admin = () => {
 
   return (
     <div className='page'>
-        <div className="userinput">
-        <input type="number" placeholder='Enter team number'/>
-        <button>
-            submit
-        </button>
-        </div>
-        
-        <br />
-        <button>
-            Release
-        </button>
+      {/* You can add UI elements here if needed */}
+      <button onClick={handleRelease}>
+        Release
+      </button>
     </div>
   );
 };
