@@ -6,7 +6,10 @@ const Client = () => {
     <div>
    <div className="page">
     <div className="header">
-        <h2>TinkerHub MEC</h2>
+       
+        
+
+        
         <br />
         <h6>presents</h6>
         <br />
