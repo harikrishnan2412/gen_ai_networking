@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-import { collection, addDoc, query, getDocs, orderBy, limit } from 'firebase/firestore';
-import { db } from '../../../firebase';
-import './Admin.css';
+import React from 'react'
+import './Admin.css'
 
 const Admin = () => {
   const [numTeams, setNumTeams] = useState(0);
@@ -48,17 +46,18 @@ const Admin = () => {
   };
 
   return (
-    <div className="page">
-      <h2>300</h2>
-      <form className="userinput" onSubmit={handleRelease}>
-        <input
-          type="number"
-          placeholder="Enter number of teams"
-          value={numTeams}
-          onChange={(e) => setNumTeams(parseInt(e.target.value, 10))}
-        />
-        <button type="submit">Submit</button>
-      </form>
+    <div className='page'>
+        <div className="userinput">
+        <input type="number" placeholder='Enter team number'/>
+        <button>
+            submit
+        </button>
+        </div>
+        
+        <br />
+        <button>
+            Release
+        </button>
     </div>
   );
 };
