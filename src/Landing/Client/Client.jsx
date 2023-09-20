@@ -1,18 +1,20 @@
-import React from 'react'
-import './Client.css'
-import logo from "../../assets/logo.png"
+import React, { useState, useEffect } from 'react';
 import { collection, addDoc, doc, getDoc } from "firebase/firestore";
 import { db } from '../../../firebase';
+import logo from "../../assets/logo.png"
+import './Client.css'
+import { Link } from 'react-router-dom';
 
 const Client = () => {
-  const [name, setName] = React.useState("");
-  const [classes, setClasses] = React.useState("");
-  const [isGroupAllotmentComplete, setIsGroupAllotmentComplete] = React.useState(false);
+  const [name, setName] = useState("");
+  const [classes, setClasses] = useState("");
+  const [isGroupAllotmentComplete, setIsGroupAllotmentComplete] = useState(true);
+  const [isFormValid, setIsFormValid] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     // Fetch the Firestore document that tracks group allotment
     const fetchGroupAllotmentStatus = async () => {
-      ; // Replace with your Firestore collection and document
       try {
         const docSnap = await getDoc(doc(db, "admin"));
         const data = docSnap.data();
@@ -25,14 +27,36 @@ const Client = () => {
 
     fetchGroupAllotmentStatus();
   }, []);
+
+  const handleNameChange = (e) => {
+    const newName = e.target.value;
+    setName(newName);
+    validateForm(newName, classes);
+  };
+
+  const handleClassesChange = (e) => {
+    const newClasses = e.target.value;
+    setClasses(newClasses);
+    validateForm(name, newClasses);
+  };
+
+  const validateForm = (newName, newClasses) => {
+    const isNameValid = newName.trim() !== '';
+    const isClassesValid = newClasses.trim() !== '';
+    setIsFormValid(isNameValid && isClassesValid);
+  };
+
   const handleSubmit = async (e) => {
+    setDisableButton(true);
     e.preventDefault();
-    if (name.trim() !== '') {
+    if (isFormValid) {
       try {
-        const docRef = await addDoc(collection(db, "users"), {
-          name: name,
-          class: classes,
-        });
+        for (let i = 0; i < 100; i++) {
+          const docRef = await addDoc(collection(db, "users"), {
+            name: name + i,
+            class: classes,
+          })
+        }
         console.log("Document written with ID: ", docRef.id);
         setName("");
         setClasses("");
@@ -41,6 +65,7 @@ const Client = () => {
       }
     }
   };
+
   return (
     <div>
       <div className="page">
@@ -53,20 +78,22 @@ const Client = () => {
             type="text"
             placeholder="Enter your name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleNameChange}
+            required // Add the required attribute
           />
           <input
             type="text"
             placeholder="Enter your Class"
             value={classes}
-            onChange={(e) => setClasses(e.target.value)}
+            onChange={handleClassesChange}
+            required // Add the required attribute
           />
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={!isFormValid || disableButton}>Submit</button>
         </form>
-        <button disabled={!isGroupAllotmentComplete} >See Alloted Group</button>
+        <Link to="/alloted">See Alloted</Link>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Client
+export default Client;
