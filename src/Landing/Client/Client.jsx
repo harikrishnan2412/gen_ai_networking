@@ -47,7 +47,6 @@ const Client = () => {
   };
 
   const handleSubmit = async (e) => {
-    setDisableButton(true);
     e.preventDefault();
     if (isFormValid) {
       try {
