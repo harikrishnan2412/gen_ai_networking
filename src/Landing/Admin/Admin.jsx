@@ -35,7 +35,8 @@ const Admin = () => {
     // Create groups and assign participants
     for (let i = 0; i < numGroups; i++) {
       const groupNumber = i + 1;
-      const groupMembers = participants.slice(i * 10, (i + 1) * 10);
+      const groupMembers = participants.slice(i * 10, (i + 1) * 10).map((participant) => participant);
+      console.log(`Group ${groupNumber} has ${groupMembers} members.`);
 
       try {
         const docRef = await addDoc(collection(db, 'groups'), {
@@ -47,7 +48,18 @@ const Admin = () => {
         console.error(`Error creating group ${groupNumber}:`, error);
       }
     }
+    // Replace with your Firestore collection and document
+    const docRef = await addDoc(collection(db, "admin"), {
+      isGroupAllotmentComplete: true,
+    });
+    console.log("Document written with ID: ", docRef.id);
 
+    const adminDocRef = doc(db, "admin"); // Replace with your Firestore collection and document
+    try {
+      await updateDoc(adminDocRef, { isGroupAllotmentComplete: true });
+    } catch (error) {
+      console.error("Error updating Firestore: ", error);
+    }
     setNumTeams(0);
   };
 
