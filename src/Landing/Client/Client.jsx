@@ -51,12 +51,10 @@ const Client = () => {
     e.preventDefault();
     if (isFormValid) {
       try {
-        for (let i = 0; i < 100; i++) {
-          const docRef = await addDoc(collection(db, "users"), {
-            name: name + i,
-            class: classes,
-          })
-        }
+        const docRef = await addDoc(collection(db, "users"), {
+          name: name + i,
+          class: classes,
+        })
         console.log("Document written with ID: ", docRef.id);
         setName("");
         setClasses("");

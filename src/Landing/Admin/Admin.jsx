@@ -35,7 +35,7 @@ const Admin = () => {
     // Create groups and assign participants
     for (let i = 0; i < numGroups; i++) {
       const groupNumber = i + 1;
-      const groupMembers = participants.slice(i * 10, (i + 1) * 10).map((participant) => participant);
+      const groupMembers = participants.slice(i * 20, (i + 1) * 20).map((participant) => participant);
       console.log(`Group ${groupNumber} has ${groupMembers} members.`);
 
       try {
